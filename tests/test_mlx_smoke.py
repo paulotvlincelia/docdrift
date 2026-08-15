@@ -1,8 +1,24 @@
 import hashlib
 import json
+import sys
 from pathlib import Path
 
-from scripts.run_mlx_smoke import sanitize_adapter_config, sanitize_command, sha256_file
+import pytest
+
+from scripts.run_mlx_smoke import parse_args, sanitize_adapter_config, sanitize_command, sha256_file
+
+
+def test_parse_args_rejects_empty_smoke(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["run_mlx_smoke.py", "--skip-inference", "--skip-training"],
+    )
+
+    with pytest.raises(SystemExit) as exc_info:
+        parse_args()
+
+    assert exc_info.value.code == 2
 
 
 def test_sha256_file(tmp_path: Path) -> None:

@@ -11,6 +11,7 @@ import platform
 import subprocess
 import sys
 import time
+import traceback
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, TypedDict
@@ -32,7 +33,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", default="configs/training/mlx-gemma-4-e2b-smoke.yaml")
     parser.add_argument("--skip-inference", action="store_true")
     parser.add_argument("--skip-training", action="store_true")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.skip_inference and args.skip_training:
+        parser.error("--skip-inference and --skip-training cannot be used together")
+    return args
 
 
 def sha256_file(path: Path) -> str:
@@ -303,7 +307,15 @@ def main() -> int:
         return_code = 0
     except Exception as exc:
         manifest["status"] = "failed"
-        manifest["error"] = {"type": type(exc).__name__, "message": str(exc)}
+        failure_traceback = traceback.format_exc()
+        failure_traceback = failure_traceback.replace(str(root), "<repo>").replace(
+            str(Path.home()), "<home>"
+        )
+        manifest["error"] = {
+            "type": type(exc).__name__,
+            "message": str(exc),
+            "traceback": failure_traceback,
+        }
     finally:
         manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
         print(f"\nReport: {manifest_path}", flush=True)
