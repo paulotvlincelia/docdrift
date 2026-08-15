@@ -1,0 +1,96 @@
+{
+  "schema_version": "0.1.0",
+  "episode_id": "payments-pr-318",
+  "repository": {
+    "id": "example/payments-service",
+    "url": "https://github.com/example/payments-service",
+    "vcs": "git",
+    "base_revision": "8b25f44",
+    "target_revision": "67ce880",
+    "languages": ["TypeScript"],
+    "architecture_summary": "Service responsible for payment authorization and retry orchestration."
+  },
+  "trigger": {
+    "type": "pull_request_updated",
+    "id": "PR-318",
+    "source": "github",
+    "timestamp": "2026-08-15T14:00:00Z",
+    "url": "https://github.com/example/payments-service/pull/318"
+  },
+  "intent_artifacts": [
+    {
+      "kind": "requirement",
+      "id": "REQ-042",
+      "status": "accepted",
+      "path": "requirements/REQ-042.md",
+      "content": "Failed payment authorizations must use exponential backoff between retries."
+    },
+    {
+      "kind": "pull_request",
+      "id": "PR-318",
+      "status": "open",
+      "url": "https://github.com/example/payments-service/pull/318",
+      "content": "Replace fixed retry intervals with exponential backoff."
+    }
+  ],
+  "decision_artifacts": [
+    {
+      "kind": "adr",
+      "id": "ADR-017",
+      "status": "accepted",
+      "path": "docs/adr/0017-payment-retries.md",
+      "content": "Payment retries use exponential backoff with delays of 1, 2 and 4 seconds."
+    }
+  ],
+  "changes": [
+    {
+      "kind": "code",
+      "path": "src/payments/retry.ts",
+      "change_type": "MODIFY",
+      "diff": "-const delays = [1000, 1000, 1000];\n+const delays = [1000, 2000, 4000];",
+      "symbols": ["retryPayment", "delays"]
+    },
+    {
+      "kind": "test",
+      "path": "tests/payments/retry.test.ts",
+      "change_type": "MODIFY",
+      "diff": "-expect(delays).toEqual([1000, 1000, 1000]);\n+expect(delays).toEqual([1000, 2000, 4000]);",
+      "symbols": ["retryPayment"]
+    }
+  ],
+  "candidate_documents": [
+    {
+      "path": "docs/architecture/payments.md",
+      "document_type": "architecture",
+      "sha256_before": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "content_before": "## Retry policy\n\nPayment authorization is attempted up to three times at fixed one-second intervals.",
+      "retrieval": {
+        "rank": 1,
+        "score": 0.94,
+        "methods": ["explicit_reference", "lexical", "co_change"]
+      }
+    },
+    {
+      "path": "docs/runbooks/payment-recovery.md",
+      "document_type": "runbook",
+      "sha256_before": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "content_before": "Operators should wait for all three automatic retry attempts before starting manual recovery.",
+      "retrieval": {
+        "rank": 2,
+        "score": 0.72,
+        "methods": ["symbol", "embedding"]
+      }
+    }
+  ],
+  "policy": {
+    "require_evidence": true,
+    "allowed_paths": ["README.md", "docs/**"],
+    "forbidden_paths": ["docs/legal/**"],
+    "instructions": "Preserve document structure and change only claims affected by the episode."
+  },
+  "context": {
+    "truncated": false,
+    "retrieval_strategy": "explicit references, path rules, co-change, lexical and embedding ranking",
+    "omitted_items": []
+  }
+}

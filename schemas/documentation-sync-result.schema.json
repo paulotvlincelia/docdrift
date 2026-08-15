@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/gemma-doc-sync/documentation-sync-result.schema.json",
+  "title": "DocumentationSyncResult",
+  "description": "Structured decision and optional document patch generated for a ChangeEnvelope.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "episode_id",
+    "decision",
+    "change_types",
+    "impacted_documents",
+    "conflicts",
+    "context_gaps",
+    "patches"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "episode_id": {"type": "string", "minLength": 1},
+    "decision": {
+      "enum": ["UPDATE", "NO_CHANGE", "NEEDS_DECISION", "INSUFFICIENT_CONTEXT"]
+    },
+    "change_types": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "behavioral",
+          "architectural",
+          "api_contract",
+          "data_model",
+          "operational",
+          "security",
+          "configuration",
+          "dependency",
+          "performance",
+          "deprecation",
+          "refactor_only",
+          "documentation_only"
+        ]
+      }
+    },
+    "impacted_documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "reason", "evidence"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1},
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"$ref": "#/$defs/evidence"}
+          }
+        }
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "description", "references"],
+        "properties": {
+          "type": {
+            "enum": [
+              "IMPLEMENTATION_DIVERGES_FROM_ADR",
+              "IMPLEMENTATION_DIVERGES_FROM_REQUIREMENT",
+              "DOCUMENTATION_CONTRADICTS_IMPLEMENTATION",
+              "ARTIFACTS_CONTRADICT_EACH_OTHER",
+              "AMBIGUOUS_AUTHORITY",
+              "OTHER"
+            ]
+          },
+          "description": {"type": "string", "minLength": 1},
+          "references": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "context_gaps": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "patches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256_before", "operations"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "sha256_before": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "operations": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"$ref": "#/$defs/operation"}
+          }
+        }
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "decision": {"type": "number", "minimum": 0, "maximum": 1},
+        "document_selection": {"type": "number", "minimum": 0, "maximum": 1},
+        "patch": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"decision": {"const": "UPDATE"}},
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "impacted_documents": {"minItems": 1},
+          "patches": {"minItems": 1}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"decision": {"const": "NO_CHANGE"}},
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "impacted_documents": {"maxItems": 0},
+          "conflicts": {"maxItems": 0},
+          "context_gaps": {"maxItems": 0},
+          "patches": {"maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"decision": {"const": "NEEDS_DECISION"}},
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "conflicts": {"minItems": 1},
+          "patches": {"maxItems": 0}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"decision": {"const": "INSUFFICIENT_CONTEXT"}},
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "context_gaps": {"minItems": 1},
+          "patches": {"maxItems": 0}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "reference"],
+      "properties": {
+        "kind": {"enum": ["requirement", "adr", "issue", "pull_request", "code", "test", "schema", "configuration", "documentation"]},
+        "reference": {"type": "string", "minLength": 1},
+        "locator": {"type": "string"}
+      }
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "old_text", "new_text"],
+          "properties": {
+            "operation": {"const": "replace"},
+            "old_text": {"type": "string", "minLength": 1},
+            "new_text": {"type": "string"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "anchor", "new_text"],
+          "properties": {
+            "operation": {"enum": ["insert_before", "insert_after"]},
+            "anchor": {"type": "string", "minLength": 1},
+            "new_text": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "old_text"],
+          "properties": {
+            "operation": {"const": "delete"},
+            "old_text": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1.0",
+  "episode_id": "payments-pr-318",
+  "decision": "UPDATE",
+  "change_types": ["behavioral", "operational"],
+  "impacted_documents": [
+    {
+      "path": "docs/architecture/payments.md",
+      "reason": "The documented fixed retry interval no longer matches the accepted requirement, ADR and implementation.",
+      "evidence": [
+        {"kind": "requirement", "reference": "REQ-042"},
+        {"kind": "adr", "reference": "ADR-017"},
+        {"kind": "code", "reference": "src/payments/retry.ts", "locator": "delays"},
+        {"kind": "test", "reference": "tests/payments/retry.test.ts", "locator": "retryPayment"}
+      ]
+    }
+  ],
+  "conflicts": [],
+  "context_gaps": [],
+  "patches": [
+    {
+      "path": "docs/architecture/payments.md",
+      "sha256_before": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "operations": [
+        {
+          "operation": "replace",
+          "old_text": "Payment authorization is attempted up to three times at fixed one-second intervals.",
+          "new_text": "Payment authorization is attempted up to three times using exponential backoff with delays of one, two and four seconds."
+        }
+      ]
+    }
+  ],
+  "confidence": {
+    "decision": 0.98,
+    "document_selection": 0.94,
+    "patch": 0.96
+  }
+}

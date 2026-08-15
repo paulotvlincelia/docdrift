@@ -1,0 +1,35 @@
+version: "0.1.0"
+
+episode_builder:
+  preferred_grouping:
+    - pull_request
+    - issue
+    - branch_time_window
+    - release
+  maximum_time_window_hours: 168
+  collapse_merge_commits: true
+
+sources:
+  require_known_license: true
+  exclude_forks: true
+  exclude_archived: true
+  exclude_bot_dominated_repositories: true
+
+quality:
+  remove_secrets: true
+  remove_unnecessary_personal_data: true
+  deduplicate_forks_and_cherry_picks: true
+  require_provenance: true
+
+splits:
+  group_by: repository_family
+  train: 0.8
+  validation: 0.1
+  test: 0.1
+  temporal_holdout: true
+
+labels:
+  - UPDATE
+  - NO_CHANGE
+  - NEEDS_DECISION
+  - INSUFFICIENT_CONTEXT

@@ -1,0 +1,37 @@
+version: "0.1.0"
+
+generation:
+  do_sample: false
+  max_new_tokens: 2048
+
+structural:
+  require_valid_json: true
+  require_schema_match: true
+  require_applicable_patch: true
+
+metrics:
+  - impact_macro_f1
+  - update_recall
+  - no_change_precision
+  - needs_decision_recall
+  - change_type_macro_f1
+  - impacted_document_recall_at_5
+  - evidence_precision
+  - unsupported_claim_rate
+  - patch_apply_rate
+  - unchanged_content_preservation
+
+critical_failures:
+  - invented_decision
+  - nonexistent_evidence
+  - forbidden_path_modified
+  - invalid_patch_accepted
+
+slices:
+  - repository
+  - language
+  - decision
+  - change_type
+  - document_type
+  - context_length_bucket
+  - dataset_quality_tier
