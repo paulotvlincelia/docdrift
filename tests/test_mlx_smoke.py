@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from scripts.run_mlx_smoke import parse_args, sanitize_adapter_config, sanitize_command, sha256_file
+from docdrift.mlx_smoke import parse_args, sanitize_adapter_config, sanitize_command, sha256_file
 
 
 def test_parse_args_rejects_empty_smoke(monkeypatch: pytest.MonkeyPatch) -> None:
