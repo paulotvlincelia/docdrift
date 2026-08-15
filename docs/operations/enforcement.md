@@ -4,6 +4,8 @@
 
 Garantir que a verificação documental aconteça independentemente da ferramenta usada para alterar o software. O enforcement é responsabilidade dos hooks e gates; o modelo fornece a análise semântica.
 
+O modelo nunca aprova um merge. Ele produz uma decisão estruturada que o runtime valida e que a política da organização interpreta. Confidence serve para telemetria e triagem, nunca para ignorar evidência, validações, revisão humana ou proteção de branch.
+
 ## Pontos de integração
 
 ### Pull request
@@ -26,6 +28,8 @@ Branch protection exige um resultado válido. Políticas iniciais:
 | `NO_CHANGE` | check aprovado e justificativa registrada |
 | `NEEDS_DECISION` | merge bloqueado até decisão registrada |
 | `INSUFFICIENT_CONTEXT` | reexecutar recuperação ou revisão humana |
+
+Antes de avaliar a política acima, o runtime rejeita resultados fora do schema, evidências inexistentes, hashes ou anchors obsoletos, paths proibidos e patches não aplicáveis. Uma falha de validação não pode ser convertida em aprovação por threshold de confidence.
 
 ### Post-merge
 
