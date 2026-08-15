@@ -78,6 +78,8 @@ O suporte a contexto longo não implica treinar no comprimento máximo. O custo 
 
 Uma configuração de intenção está em [`configs/training/qlora-gemma-4-e2b.yaml`](../../configs/training/qlora-gemma-4-e2b.yaml). Parâmetros ainda não medidos são marcados como experimentais e devem ser atualizados depois do primeiro profile de memória.
 
+O fluxo de desenvolvimento e smoke test em Macs Apple Silicon está documentado em [`local-apple-silicon.md`](local-apple-silicon.md). Ele usa MLX e uma configuração deliberadamente pequena; não substitui a receita CUDA de uma execução oficial.
+
 ## Mistura de dados
 
 A composição de cada execução deve ser registrada. Ponto inicial para experimentação:

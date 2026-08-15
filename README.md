@@ -110,6 +110,8 @@ Expected output:
 contracts valid
 ```
 
+Apple Silicon contributors can also run the local [MLX smoke test](docs/training/local-apple-silicon.md) to validate Gemma 4 inference and LoRA training on Metal.
+
 ## Research plan
 
 DocDrift is being developed in evidence-driven stages:

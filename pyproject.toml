@@ -45,6 +45,12 @@ training = [
   "transformers>=5.10.1",
   "trl>=0.13",
 ]
+mac-training = [
+  "huggingface-hub>=1,<2",
+  "mlx-lm>=0.31,<0.32; platform_system == 'Darwin' and platform_machine == 'arm64'",
+  "psutil>=7,<8",
+  "pyyaml>=6,<7",
+]
 
 [project.urls]
 Homepage = "https://github.com/paulotvlincelia/docdrift"
