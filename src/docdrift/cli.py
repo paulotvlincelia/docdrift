@@ -5,11 +5,11 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from gemma_doc_sync.validation import load_json, validate_document
+from docdrift.validation import load_json, validate_document
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="gemma-doc-sync")
+    parser = argparse.ArgumentParser(prog="docdrift")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     validate = subparsers.add_parser("validate", help="validate input and output JSON files")

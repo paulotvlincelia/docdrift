@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from gemma_doc_sync.validation import load_json, validate_document
+from docdrift.validation import load_json, validate_document
 
 ROOT = Path(__file__).resolve().parents[1]
 

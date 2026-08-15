@@ -11,7 +11,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_ROOT = PROJECT_ROOT / "schemas"
 if not SCHEMA_ROOT.is_dir():
-    SCHEMA_ROOT = Path(__file__).resolve().parent.parent / "gemma_doc_sync_contracts"
+    SCHEMA_ROOT = Path(__file__).resolve().parent.parent / "docdrift_contracts"
 
 SCHEMAS = {
     "change-envelope": SCHEMA_ROOT / "change-envelope.schema.json",

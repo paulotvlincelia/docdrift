@@ -7,7 +7,7 @@
 - [x] schemas de entrada e saída;
 - [x] exemplo validável;
 - [x] estratégia inicial de dataset, treino e avaliação;
-- [ ] escolher marca e nome público;
+- [x] escolher marca e nome público;
 - [ ] definir licença do código e do futuro dataset.
 
 ## Fase 1 — baseline e benchmark
@@ -49,9 +49,10 @@
 
 ## Fase 5 — release pública
 
-- [ ] documentação de contribuição;
-- [ ] política de segurança e remoção de dados;
-- [ ] dataset card;
-- [ ] model card;
+- [x] documentação inicial de contribuição e governança;
+- [x] política inicial de segurança e remoção de dados;
+- [x] dataset card em rascunho;
+- [x] model card em rascunho;
+- [ ] escolher e publicar a licença do repositório;
 - [ ] demo reprodutível;
 - [ ] benchmark público com splits sem vazamento.

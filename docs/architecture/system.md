@@ -9,7 +9,7 @@ flowchart LR
     A["Eventos upstream"] --> B["Collector"]
     B --> C["Context Retriever"]
     C --> D["ChangeEnvelope"]
-    D --> E["Gemma Documentation Synchronizer"]
+    D --> E["DocDrift-Gemma-4-E2B"]
     E --> F["DocumentationSyncResult"]
     F --> G["Schema and Evidence Validators"]
     G --> H{"Resultado"}

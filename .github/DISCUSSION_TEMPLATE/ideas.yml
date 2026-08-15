@@ -1,0 +1,20 @@
+title: "[Idea] "
+labels: [ideas]
+body:
+  - type: markdown
+    attributes:
+      value: Share an early idea before turning it into a scoped feature or research issue.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem or opportunity do you see?
+    validations:
+      required: true
+  - type: textarea
+    id: direction
+    attributes:
+      label: What direction would you explore?
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Examples, evidence, or related work

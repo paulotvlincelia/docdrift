@@ -1,0 +1,42 @@
+name: Feature proposal
+description: Propose a focused improvement to the product, tooling, workflow, or integration.
+title: "proposal: "
+labels: [enhancement, needs-discussion]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What concrete user or contributor problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed approach
+      description: Describe the behavior, interface, or workflow you have in mind.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: dropdown
+    id: area
+    attributes:
+      label: Primary area
+      options:
+        - Runtime and integrations
+        - Dataset and curation
+        - Training
+        - Evaluation
+        - Schemas and contracts
+        - Documentation and community
+        - Security and privacy
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or examples
+      description: Link related tools, papers, failures, or sample workflows.

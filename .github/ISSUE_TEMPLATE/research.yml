@@ -1,0 +1,35 @@
+name: Research or evaluation proposal
+description: Propose an experiment, metric, baseline, benchmark slice, or adversarial scenario.
+title: "research: "
+labels: [research, evaluation, needs-discussion]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Research question
+      description: State a falsifiable question or hypothesis.
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: Proposed method
+      description: Describe data, baselines, metrics, splits, and comparison criteria.
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Why it matters
+      description: Explain which project decision this evidence could change.
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and confounders
+      description: Consider leakage, contamination, licensing, privacy, and evaluation bias.
+  - type: textarea
+    id: references
+    attributes:
+      label: References and prior work

@@ -1,0 +1,59 @@
+name: Dataset proposal
+description: Propose a data source, Change Episode, curation rule, or dataset correction.
+title: "dataset: "
+labels: [dataset, data-governance, needs-review]
+body:
+  - type: dropdown
+    id: proposal_type
+    attributes:
+      label: Proposal type
+      options:
+        - New public data source
+        - Curated Change Episode
+        - Curation or labeling rule
+        - Dataset correction
+        - Removal request
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source and immutable revision
+      description: Repository URL plus commit, tag, release, or snapshot identifier.
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: License
+      description: Identify the applicable license and link its text.
+    validations:
+      required: true
+  - type: textarea
+    id: value
+    attributes:
+      label: Why is this useful?
+      description: Explain which DocDrift task, language, document type, or failure mode it covers.
+    validations:
+      required: true
+  - type: textarea
+    id: privacy
+    attributes:
+      label: Privacy, secrets, and redistribution
+      description: Describe scans, redactions, personal data, and the basis for redistribution.
+    validations:
+      required: true
+  - type: textarea
+    id: labeling
+    attributes:
+      label: Proposed extraction or labels
+      description: Explain how the input, target, evidence, and decision would be established.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I am not submitting proprietary or confidential material.
+          required: true
+        - label: I understand that public source code is not automatically appropriate training data.
+          required: true

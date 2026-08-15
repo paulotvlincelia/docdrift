@@ -1,4 +1,4 @@
-# Documentação do projeto
+# Documentação do DocDrift
 
 Esta documentação registra o produto, os contratos e as decisões do projeto. Mudanças que alterem comportamento, dados, treinamento ou critérios de qualidade devem atualizar os documentos correspondentes.
 
@@ -29,3 +29,11 @@ Esta documentação registra o produto, os contratos e as decisões do projeto. 
 ## Planejamento
 
 - [Roadmap](roadmap.md)
+
+## Comunidade
+
+- [Como contribuir](../CONTRIBUTING.md)
+- [Governança](../GOVERNANCE.md)
+- [Suporte](../SUPPORT.md)
+- [Segurança](../SECURITY.md)
+- [Código de conduta](../CODE_OF_CONDUCT.md)

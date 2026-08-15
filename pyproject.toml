@@ -3,11 +3,32 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "gemma-documentation-synchronizer"
+name = "docdrift"
 version = "0.1.0"
-description = "Dataset, fine-tuning and runtime contracts for an SDLC documentation synchronizer based on Gemma 4 E2B."
+description = "Keep requirements, ADRs, code, tests, and documentation aligned throughout the SDLC."
 readme = "README.md"
 requires-python = ">=3.11"
+authors = [
+  {name = "Paulo Tavares"},
+]
+keywords = [
+  "documentation",
+  "fine-tuning",
+  "gemma",
+  "machine-learning",
+  "sdlc",
+  "software-engineering",
+]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Documentation",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Quality Assurance",
+]
 dependencies = [
   "jsonschema>=4.23,<5",
 ]
@@ -25,14 +46,19 @@ training = [
   "trl>=0.13",
 ]
 
+[project.urls]
+Homepage = "https://github.com/paulotvlincelia/docdrift"
+Documentation = "https://github.com/paulotvlincelia/docdrift/tree/main/docs"
+Issues = "https://github.com/paulotvlincelia/docdrift/issues"
+
 [project.scripts]
-gemma-doc-sync = "gemma_doc_sync.cli:main"
+docdrift = "docdrift.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/gemma_doc_sync"]
+packages = ["src/docdrift"]
 
 [tool.hatch.build.targets.wheel.force-include]
-"schemas" = "gemma_doc_sync_contracts"
+"schemas" = "docdrift_contracts"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

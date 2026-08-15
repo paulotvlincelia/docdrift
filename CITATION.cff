@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If DocDrift supports your research or engineering work, please cite the project."
+title: "DocDrift: Documentation continuity across the software development lifecycle"
+type: software
+version: 0.1.0
+authors:
+  - family-names: Tavares
+    given-names: Paulo
+repository-code: "https://github.com/paulotvlincelia/docdrift"
+url: "https://github.com/paulotvlincelia/docdrift"
+keywords:
+  - software documentation
+  - software engineering
+  - fine-tuning
+  - Gemma
+  - SDLC
+  - architecture decision records
+  - documentation drift

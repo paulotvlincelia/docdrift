@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.org/gemma-doc-sync/change-envelope.schema.json",
+  "$id": "urn:docdrift:schema:change-envelope:0.1.0",
   "title": "ChangeEnvelope",
   "description": "Versioned context passed to the documentation synchronizer.",
   "type": "object",

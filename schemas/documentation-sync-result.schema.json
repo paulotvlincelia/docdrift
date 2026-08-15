@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.org/gemma-doc-sync/documentation-sync-result.schema.json",
+  "$id": "urn:docdrift:schema:documentation-sync-result:0.1.0",
   "title": "DocumentationSyncResult",
   "description": "Structured decision and optional document patch generated for a ChangeEnvelope.",
   "type": "object",

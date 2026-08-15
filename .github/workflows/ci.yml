@@ -26,4 +26,4 @@ jobs:
       - name: Test
         run: pytest -q
       - name: Validate examples
-        run: python -m gemma_doc_sync validate examples/change-envelope.json examples/documentation-sync-result.json
+        run: python -m docdrift validate examples/change-envelope.json examples/documentation-sync-result.json

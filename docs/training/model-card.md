@@ -1,4 +1,4 @@
-# Model Card — Gemma Documentation Synchronizer
+# Model Card — DocDrift-Gemma-4-E2B
 
 > Status: rascunho pré-treinamento. Os campos de resultados serão preenchidos após uma execução reproduzível.
 
