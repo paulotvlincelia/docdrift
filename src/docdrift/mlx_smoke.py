@@ -178,9 +178,14 @@ def sanitize_adapter_config(path: Path, model_id: str, revision: str) -> None:
     path.write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
 
 
-def main() -> int:
+def resolve_repo_root(repo_root: Path | None) -> Path:
+    """Resolve an explicit wrapper root, falling back to the caller's working directory."""
+    return (repo_root or Path.cwd()).resolve()
+
+
+def main(repo_root: Path | None = None) -> int:
     args = parse_args()
-    root = Path(__file__).resolve().parents[2]
+    root = resolve_repo_root(repo_root)
     bin_dir = Path(sys.executable).parent
     generate = bin_dir / "mlx_lm.generate"
     lora = bin_dir / "mlx_lm.lora"

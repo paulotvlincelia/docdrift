@@ -5,7 +5,26 @@ from pathlib import Path
 
 import pytest
 
-from docdrift.mlx_smoke import parse_args, sanitize_adapter_config, sanitize_command, sha256_file
+from docdrift.mlx_smoke import (
+    parse_args,
+    resolve_repo_root,
+    sanitize_adapter_config,
+    sanitize_command,
+    sha256_file,
+)
+
+
+def test_resolve_repo_root_defaults_to_working_directory(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    assert resolve_repo_root(None) == tmp_path.resolve()
+
+
+def test_resolve_repo_root_uses_explicit_wrapper_root(tmp_path: Path) -> None:
+    assert resolve_repo_root(tmp_path) == tmp_path.resolve()
 
 
 def test_parse_args_rejects_empty_smoke(monkeypatch: pytest.MonkeyPatch) -> None:
