@@ -41,6 +41,8 @@ O modelo será comparado com o checkpoint original em splits por repositório, h
 | Patch apply rate | TBD | TBD |
 | Unsupported claim rate | TBD | TBD |
 
+Cada release preencherá também o commit do código, revisões imutáveis de modelo e dataset, configuração resolvida, backend canônico, hash do adapter e referência ao manifest de promoção.
+
 ## Limitações esperadas
 
 - capacidade limitada para mudanças muito distribuídas ou ambíguas;

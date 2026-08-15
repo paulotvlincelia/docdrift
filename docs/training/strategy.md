@@ -74,9 +74,60 @@ Opcionalmente aplicar DPO/ORPO com pares como:
 
 O suporte a contexto longo não implica treinar no comprimento máximo. O custo de ativação e a distribuição dos exemplos devem orientar o comprimento, inicialmente entre 4K e 16K tokens.
 
+## Modelo operacional de treino, promoção e consumo
+
+DocDrift separa três caminhos para evitar que conveniência local seja confundida com promoção oficial do modelo.
+
+```text
+Desenvolvimento local / contributor
+    Apple Silicon
+        -> MLX-LM
+        -> LoRA/QLoRA experimental
+        -> smoke tests e evals locais
+
+Promoção canônica
+    Colab/CUDA
+        -> receita reproduzível de treino
+        -> evals oficiais
+        -> gates de promoção
+        -> Hugging Face
+
+Consumo e QA manual opcional
+    artefato promovido
+        -> formato compatível de inferência
+        -> LM Studio
+        -> exploração manual, demo e teste da API local
+```
+
+### O que é obrigatório
+
+Para um adapter ou checkpoint ser considerado candidato oficial do projeto, ele deve passar pelo caminho canônico de promoção em CUDA/Colab (ou por outro backend futuramente declarado equivalente), usando configuração versionada, dataset identificado, seed, revisão do modelo base e suíte oficial de avaliação. A publicação no Hugging Face ocorre somente depois desses gates.
+
+O objetivo não é tratar Colab como infraestrutura permanente, mas ter uma referência reproduzível e acessível para colaboradores que não possuam Apple Silicon ou hardware local suficiente. O projeto pode promover outro backend a canônico quando houver equivalência demonstrada e documentação reproduzível.
+
+### O que é suportado, mas não obrigatório
+
+MLX-LM é o caminho de desenvolvimento local para Apple Silicon. Ele pode ser usado para profiling, smoke tests, iteração de hiperparâmetros e até treinos completos quando o colaborador tiver recursos. Resultados MLX são evidência útil, porém não substituem automaticamente a execução canônica antes de uma promoção.
+
+LM Studio fica depois do treino. Ele é uma camada opcional de inferência e QA manual para carregar um artefato compatível, testar prompts, comportamento conversacional e integração via API local. Ele não é parte da receita de fine-tuning do DocDrift e não participa dos gates quantitativos oficiais.
+
+### Por que manter essa separação
+
+- evita acoplar a reprodutibilidade do projeto a um único tipo de hardware;
+- permite contribuição local rápida sem rebaixar os critérios de promoção;
+- reduz diferenças silenciosas entre backends de treino;
+- mantém os resultados oficiais comparáveis;
+- permite usar ferramentas de consumo como LM Studio sem confundi-las com o pipeline de pesquisa.
+
+Toda conversão necessária para consumir um adapter promovido no LM Studio deve ser tratada como um artefato derivado e rastreável. A versão publicada no Hugging Face permanece a referência de proveniência do experimento.
+
 ## Configuração inicial
 
 Uma configuração de intenção está em [`configs/training/qlora-gemma-4-e2b.yaml`](../../configs/training/qlora-gemma-4-e2b.yaml). Parâmetros ainda não medidos são marcados como experimentais e devem ser atualizados depois do primeiro profile de memória.
+
+O fluxo de desenvolvimento e smoke test em Macs Apple Silicon está documentado em [`local-apple-silicon.md`](local-apple-silicon.md). Ele usa MLX e uma configuração deliberadamente pequena; não substitui a receita CUDA de uma execução oficial.
+
+O ciclo completo de experimento, reprodução canônica, avaliação e publicação está definido no [`modelo operacional`](operating-model.md). Colab/CUDA é o executor de referência inicial para candidatos a release, mas o contrato é backend-neutral e permite experimentos locais. Adapters MLX não são promovidos como adapters PEFT sem reprodução ou conversão validada.
 
 ## Mistura de dados
 

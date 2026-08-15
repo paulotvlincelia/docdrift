@@ -3,7 +3,7 @@ status: draft
 
 model:
   id: google/gemma-4-E2B-it
-  revision: null  # Pin before the first reproducible run.
+  revision: 3e22461f65e89153144f8adb70e3b8c2cc9845a7
   trust_remote_code: false
   torch_dtype: bfloat16
   quantization:

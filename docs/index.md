@@ -17,6 +17,8 @@ Esta documentação registra o produto, os contratos e as decisões do projeto. 
 - [Mineração e curadoria](dataset/curation.md)
 - [Dataset card (rascunho)](dataset/dataset-card.md)
 - [Estratégia de fine-tuning](training/strategy.md)
+- [Modelo operacional de treinamento e promoção](training/operating-model.md)
+- [Treinamento local em Apple Silicon](training/local-apple-silicon.md)
 - [Model card (rascunho)](training/model-card.md)
 - [Plano de avaliação](evaluation/plan.md)
 
@@ -25,6 +27,7 @@ Esta documentação registra o produto, os contratos e as decisões do projeto. 
 - [ADR-0001: Change Episode como unidade do dataset](adr/0001-change-episode-as-dataset-unit.md)
 - [ADR-0002: Patches estruturados como saída](adr/0002-structured-document-patches.md)
 - [ADR-0003: Gemma 4 E2B como modelo inicial](adr/0003-gemma-4-e2b.md)
+- [ADR-0004: contrato backend-neutral e promoção canônica em CUDA](adr/0004-backend-neutral-training-canonical-cuda.md)
 
 ## Planejamento
 

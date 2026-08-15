@@ -4,21 +4,16 @@ updates:
     directory: /
     schedule:
       interval: monthly
-    groups:
-      python-dependencies:
-        patterns:
-          - "*"
     labels:
       - dependencies
-    open-pull-requests-limit: 1
+    # Quiet mode: routine version-update PRs are disabled. Dependabot security
+    # updates remain controlled independently by the repository security settings.
+    open-pull-requests-limit: 0
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
-    groups:
-      github-actions:
-        patterns:
-          - "*"
     labels:
       - dependencies
-    open-pull-requests-limit: 1
+    # Review action upgrades deliberately instead of receiving routine PRs.
+    open-pull-requests-limit: 0

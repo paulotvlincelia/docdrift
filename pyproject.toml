@@ -36,14 +36,22 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "pytest>=8.3,<9",
+  "pyyaml>=6,<7",
   "ruff>=0.9,<1",
 ]
 training = [
   "accelerate>=1.2",
+  "bitsandbytes>=0.50,<1; platform_system == 'Linux'",
   "datasets>=3.2",
   "peft>=0.14",
   "transformers>=5.10.1",
   "trl>=0.13",
+]
+mac-training = [
+  "huggingface-hub>=1,<2",
+  "mlx-lm>=0.31,<0.32; platform_system == 'Darwin' and platform_machine == 'arm64'",
+  "psutil>=7,<8",
+  "pyyaml>=6,<7",
 ]
 
 [project.urls]

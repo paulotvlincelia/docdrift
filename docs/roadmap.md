@@ -31,6 +31,10 @@
 
 ## Fase 3 — fine-tuning
 
+- [x] definir contrato backend-neutral e estágio canônico CUDA;
+- [ ] publicar notebook Colab versionado como orquestrador fino;
+- [x] gerar manifest experimental e hashes no smoke test MLX;
+- [ ] estabilizar o schema do manifest e implementá-lo na execução CUDA canônica;
 - [ ] realizar experimento pequeno de QLoRA;
 - [ ] comparar task-specific versus multitask;
 - [ ] ajustar mistura de classes;
