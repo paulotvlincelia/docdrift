@@ -1,6 +1,6 @@
 # Treinamento local em Apple Silicon
 
-Este caminho existe para desenvolvimento, profiling e smoke tests. As execuções oficiais podem continuar em CUDA/Colab até que equivalência e conversão de adapters sejam demonstradas.
+Este é um backend suportado para desenvolvimento, profiling, avaliação e fine-tuning experimental. Resultados locais podem propor candidatos, mas a promoção segue o [modelo operacional](operating-model.md): reprodução canônica em CUDA, avaliação limpa e staging antes do Hugging Face.
 
 ## Instalação
 
@@ -26,7 +26,8 @@ O comando:
 1. baixa ou reutiliza `mlx-community/gemma-4-e2b-it-4bit`;
 2. executa uma geração curta na GPU Metal;
 3. treina um adapter LoRA por cinco iterações;
-4. grava adapter e relatório em `artifacts/mlx-smoke/<run-id>/`.
+4. recarrega o adapter e executa uma nova inferência;
+5. grava adapter, logs e manifest em `artifacts/mlx-smoke/<run-id>/`.
 
 Os exemplos em `examples/training-smoke/` são sintéticos e servem somente para verificar o pipeline. Eles não devem ser incluídos em resultados de qualidade ou publicados como dataset DocDrift.
 
@@ -50,6 +51,8 @@ Informe o token somente no prompt seguro da CLI. Nunca grave tokens em arquivos 
 - runs oficiais devem fixar modelo, revisão, dataset, configuração e ambiente.
 
 O smoke test comprova compatibilidade, não qualidade do modelo. A promoção de um adapter continua sujeita ao plano de avaliação do projeto.
+
+O manifest resolve e registra a revisão imutável do modelo, commit e estado do Git, hashes de configuração, dataset, lockfile e adapter, versões do runtime e memória disponível. Caminhos locais são removidos do comando e do `adapter_config.json`. O estado permanece `experimental`, mesmo quando o smoke test passa.
 
 ## Baseline inicial do projeto
 

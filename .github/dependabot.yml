@@ -5,12 +5,29 @@ updates:
     schedule:
       interval: monthly
     groups:
-      python-dependencies:
+      core-python:
         patterns:
-          - "*"
+          - jsonschema
+          - pytest
+          - pyyaml
+          - ruff
+          - hatchling
+      cuda-training:
+        patterns:
+          - accelerate
+          - bitsandbytes
+          - datasets
+          - peft
+          - transformers
+          - trl
+      apple-silicon-training:
+        patterns:
+          - huggingface-hub
+          - mlx-lm
+          - psutil
     labels:
       - dependencies
-    open-pull-requests-limit: 1
+    open-pull-requests-limit: 3
   - package-ecosystem: github-actions
     directory: /
     schedule:

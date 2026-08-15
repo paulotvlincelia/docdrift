@@ -18,12 +18,14 @@ jobs:
           python-version: "3.11"
           cache: pip
       - name: Install
-        run: pip install -e '.[dev]'
+        run: pip install -e '.[dev]' uv
       - name: Lint
         run: |
-          ruff check src tests
-          ruff format --check src tests
+          ruff check src tests scripts
+          ruff format --check src tests scripts
       - name: Test
         run: pytest -q
+      - name: Verify lockfile
+        run: uv lock --check
       - name: Validate examples
         run: python -m docdrift validate examples/change-envelope.json examples/documentation-sync-result.json

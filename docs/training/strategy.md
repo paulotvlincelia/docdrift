@@ -80,6 +80,8 @@ Uma configuração de intenção está em [`configs/training/qlora-gemma-4-e2b.y
 
 O fluxo de desenvolvimento e smoke test em Macs Apple Silicon está documentado em [`local-apple-silicon.md`](local-apple-silicon.md). Ele usa MLX e uma configuração deliberadamente pequena; não substitui a receita CUDA de uma execução oficial.
 
+O ciclo completo de experimento, reprodução canônica, avaliação e publicação está definido no [`modelo operacional`](operating-model.md). Colab/CUDA é o executor de referência inicial para candidatos a release, mas o contrato é backend-neutral e permite experimentos locais. Adapters MLX não são promovidos como adapters PEFT sem reprodução ou conversão validada.
+
 ## Mistura de dados
 
 A composição de cada execução deve ser registrada. Ponto inicial para experimentação:

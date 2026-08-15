@@ -97,3 +97,13 @@ Uma versão não é promovida apenas por melhorar a média. Ela deve:
 - demonstrar ganho em repositórios não vistos;
 - passar por revisão humana cega em uma amostra representativa;
 - possuir relatório reproduzível.
+
+## Gate de promoção entre backends
+
+Resultados produzidos em MLX, Colab ou CUDA local usam os mesmos splits e contratos, mas não precisam ser idênticos bit a bit. Antes da promoção, o candidato deve:
+
+- ser reproduzido no estágio canônico definido no [modelo operacional](../training/operating-model.md), salvo conversão explicitamente suportada;
+- ser carregado e avaliado em processo limpo, separado do estado do treino;
+- permanecer dentro das tolerâncias registradas para métricas e falhas críticas;
+- registrar backend, acelerador, versões, seeds e hashes no manifest;
+- passar por um download de staging e uma inferência de verificação.
