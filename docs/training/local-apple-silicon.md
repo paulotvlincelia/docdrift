@@ -2,6 +2,30 @@
 
 Este caminho existe para desenvolvimento, profiling e smoke tests. As execuções oficiais podem continuar em CUDA/Colab até que equivalência e conversão de adapters sejam demonstradas.
 
+## Papel deste ambiente no pipeline
+
+O fluxo Apple Silicon é um ambiente suportado de desenvolvimento, não o gate canônico de promoção do modelo.
+
+```text
+Apple Silicon contributor
+    -> MLX-LM
+    -> LoRA/QLoRA experimental
+    -> smoke tests e evals locais
+
+Candidate for promotion
+    -> Colab/CUDA
+    -> receita reproduzível
+    -> evals oficiais
+    -> Hugging Face
+
+Optional manual QA
+    -> artefato promovido em formato compatível
+    -> LM Studio
+    -> inferência, demo e testes locais de comportamento/API
+```
+
+Um colaborador com hardware local suficiente pode executar treinos maiores ou completos com MLX-LM. Esses resultados são válidos como experimentos e podem orientar o projeto, mas um artefato só deve ser apresentado como release/candidato oficial depois de passar pelo caminho de promoção definido em [`strategy.md`](strategy.md).
+
 ## Instalação
 
 No macOS com Apple Silicon:
@@ -40,6 +64,20 @@ Checkpoints públicos podem ser baixados sem autenticação, com limites menores
 ```
 
 Informe o token somente no prompt seguro da CLI. Nunca grave tokens em arquivos versionados, comandos de shell, exemplos ou relatórios.
+
+## LM Studio para inferência e QA manual
+
+LM Studio é opcional e fica deliberadamente fora da receita de treinamento. Depois que um modelo ou adapter for aprovado e existir um artefato compatível de inferência, ele pode ser carregado no LM Studio para:
+
+- exploração manual de casos do challenge set;
+- demonstrações locais do DocDrift;
+- inspeção qualitativa de respostas e abstention behavior;
+- testes de integração por API local;
+- comparação humana entre modelo base e versão promovida.
+
+Esses testes não substituem as métricas e gates automatizados do projeto. Uma sessão no LM Studio pode revelar regressões ou casos interessantes, mas não é evidência suficiente para promover um modelo.
+
+Se for necessária conversão ou quantização para consumo no LM Studio, o artefato derivado deve registrar sua origem, versão do modelo promovido e processo de conversão. O artefato publicado pelo pipeline oficial permanece a referência de proveniência.
 
 ## Limites iniciais
 
