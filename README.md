@@ -65,6 +65,25 @@ flowchart LR
 
 The model performs semantic judgment and patch generation. Deterministic code remains responsible for event capture, context assembly, schema validation, evidence checks, patch application, permissions, and merge policy.
 
+## Training and model promotion
+
+DocDrift deliberately separates local experimentation, official promotion, and local consumption:
+
+```text
+Local development (supported)
+    Apple Silicon -> MLX-LM -> LoRA/QLoRA -> local evals
+
+Canonical promotion (required for official artifacts)
+    Colab/CUDA -> reproducible training -> official evals -> promotion gates -> Hugging Face
+
+Manual consumption / QA (optional)
+    promoted compatible artifact -> LM Studio -> local inference, demos and API testing
+```
+
+MLX-LM enables low-cost contributor iteration on Apple Silicon and may be used for substantial training when local resources permit. The canonical promotion path remains backend-controlled so that official results are reproducible and comparable. LM Studio is intentionally downstream of training: it is useful for manual QA, demos and local serving, but it is not a DocDrift fine-tuning backend or a substitute for the official evaluation gates.
+
+See the full [training strategy](docs/training/strategy.md) and [Apple Silicon workflow](docs/training/local-apple-silicon.md).
+
 ## Project status
 
 DocDrift is currently a **research preview**. The repository contains the initial architecture, data contracts, curation strategy, training plan, evaluation framework, and validation scaffolding.
